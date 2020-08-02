@@ -58,6 +58,7 @@ export default {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('name', response.data.name)
           localStorage.setItem('email', response.data.email)
+          this.$router.go('/')
         })
     },
   },
