@@ -3,9 +3,11 @@
     <v-toolbar-title>eCoach</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-text-field
+      v-model="searchItem"
       label="Nombre"
       solo
       prepend-inner-icon="mdi-magnify"
+      @submit.prevent="search"
     ></v-text-field>
   </v-app-bar>
 </template>
@@ -13,5 +15,15 @@
 <script>
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      searchItem: '',
+    }
+  },
+  methods: {
+    search() {
+      this.$router.push(`/customers/${this.searchItem}`)
+    },
+  },
 }
 </script>

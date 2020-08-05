@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     seeCustomer() {
-      this.customer.name = this.customer.name + 'Fortu'
+      this.$router.push(`/customers/${this.customer._id}`)
     },
   },
 }
