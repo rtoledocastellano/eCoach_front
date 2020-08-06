@@ -19,19 +19,19 @@
           <v-expansion-panel-header>Datos Personales</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-text-field
-              v-model="email"
+              v-model="customer.email"
               :label="customer.email ? customer.email : 'Email'"
               :disabled="modifyPersonalData"
               prepend-inner-icon="mdi-email"
             ></v-text-field>
             <v-text-field
-              v-model="tlf"
+              v-model="customer.telephone"
               :label="customer.telephone ? customer.telephone : 'Telefóno'"
               :disabled="modifyPersonalData"
               prepend-inner-icon="mdi-email"
             ></v-text-field>
             <v-text-field
-              v-model="birthDate"
+              v-model="customer.birthDate"
               :label="
                 customer.birthDate ? customer.birthDate : 'Fecha de Nacimiento'
               "
@@ -46,7 +46,7 @@
             ></v-text-field>
             <div class="justify-right">
               <v-btn
-                v-if="modifyPersonalData"
+                v-if="!modifyPersonalData"
                 color="#F9D56E"
                 @click="modifyPersonalData = !modifyPersonalData"
                 >Editar</v-btn
@@ -64,11 +64,6 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Control de Citas</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <AppointmentCard
-              v-for="(appointment, idx) in appointments"
-              :key="idx"
-              :appointment="appointment"
-            />
             <v-data-table
               :headers="headers"
               :items="appointments"
@@ -176,20 +171,22 @@
 </template>
 
 <script>
-import AppointmentCard from '@/components/apointment-card'
-
 export default {
-  components: {
-    AppointmentCard,
+  async asyncData({ $axios, params }) {
+    const headers = { headers: { token: localStorage.getItem('token') } }
+    const customerData = await $axios.get(`customers/${params.id}`, headers)
+    const appointmentData = await $axios.get(
+      `customers/${params.id}/appointment`,
+      headers
+    )
+    return {
+      customer: customerData.data[0],
+      appointments: appointmentData.data,
+    }
   },
   data() {
     return {
-      email: '',
-      tlf: '',
-      birthDate: '',
-      modifyPersonalData: true,
-      customer: {},
-      appointments: [],
+      modifyPersonalData: false,
       showAppointment: false,
       date: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -214,28 +211,15 @@ export default {
       ],
     }
   },
-  created() {
-    this.$axios
-      .get(`customers/${this.$route.params.id}`, {
-        headers: { token: localStorage.getItem('token') },
-      })
-      .then((response) => (this.customer = response.data[0]))
-  },
-  mounted() {
-    this.$axios
-      .get(`customers/${this.$route.params.id}/appointment`, {
-        headers: { token: localStorage.getItem('token') },
-      })
-      .then((response) => (this.appointments = response.data))
-  },
   methods: {
     updateCustomer() {
       this.$axios
         .post(
           `customers/${this.$route.params.id}`,
           {
-            email: this.email,
-            telephone: this.tlf,
+            email: this.customer.email,
+            telephone: this.customer.telephone,
+            birthDate: this.customer.birthDate,
           },
           {
             headers: { token: localStorage.getItem('token') },

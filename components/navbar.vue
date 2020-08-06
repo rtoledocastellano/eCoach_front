@@ -7,7 +7,7 @@
       label="Nombre"
       solo
       prepend-inner-icon="mdi-magnify"
-      @submit.prevent="search"
+      @keyup.enter="search"
     ></v-text-field>
   </v-app-bar>
 </template>
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     search() {
-      this.$router.push(`/customers/${this.searchItem}`)
+      this.$router.push(`/search/${this.searchItem}`)
     },
   },
 }

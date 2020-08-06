@@ -3,12 +3,12 @@
     <div>
       <Navbar />
     </div>
-    <v-content>
+    <v-main>
       <v-container>
         <nuxt />
       </v-container>
-    </v-content>
-    <v-footer :absolute="!fixed" app>
+    </v-main>
+    <v-footer absolute app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>

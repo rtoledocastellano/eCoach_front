@@ -29,10 +29,7 @@ export default {
   },
   created() {
     this.$axios
-      .get('/customers/search', {
-        data: {
-          name: this.$route.params.id,
-        },
+      .get(`/customers/search/${this.$route.params.id}`, {
         headers: { token: localStorage.getItem('token') },
       })
       .then((response) => (this.customers = response.data))

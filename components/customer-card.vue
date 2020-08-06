@@ -16,7 +16,10 @@
 <script>
 export default {
   props: {
-    customer: Object,
+    customer: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
     seeCustomer() {
