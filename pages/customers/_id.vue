@@ -1,6 +1,5 @@
 <template>
-  <v-app>
-    {{ customer }}
+  <div>
     <v-container class="customerAvatar">
       <v-col>
         <v-row class="justify-center align-center">
@@ -28,7 +27,7 @@
               v-model="customer.telephone"
               :label="customer.telephone ? customer.telephone : 'Telefóno'"
               :disabled="!modifyPersonalData"
-              prepend-inner-icon="mdi-email"
+              prepend-inner-icon="mdi-phone"
             ></v-text-field>
             <v-row>
               <v-col cols="12" sm="6" md="4">
@@ -44,7 +43,7 @@
                     <v-text-field
                       v-model="date"
                       label="Fecha de Nacimiento"
-                      prepend-icon="event"
+                      prepend-icon="mdi-calendar"
                       :disabled="!modifyPersonalData"
                       v-bind="attrs"
                       v-on="on"
@@ -57,13 +56,15 @@
                 </v-menu>
               </v-col>
             </v-row>
-            <v-text-field
+            <v-select
               v-model="goal"
               :label="customer.goal ? customer.goal : 'Introduzca Objetivo'"
-              :disabled="modifyPersonalData"
-              prepend-inner-icon="mdi-user"
-            ></v-text-field>
-            <div class="justify-right">
+              :disabled="!modifyPersonalData"
+              :items="possibleGoals"
+              :error-messages="errors"
+              prepend-inner-icon="mdi-bullseye-arrow"
+            ></v-select>
+            <div class="text-right">
               <v-btn
                 v-if="!modifyPersonalData"
                 color="#F9D56E"
@@ -182,7 +183,7 @@
         </v-row>
       </div>
     </v-container>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -212,6 +213,7 @@ export default {
       menu3: false,
       modal2: false,
       items: [10, 20, 30],
+      possibleGoals: ['Perder Peso', 'Mantener Peso', 'Aumentar Masa'],
       headers: [
         {
           text: 'Date',

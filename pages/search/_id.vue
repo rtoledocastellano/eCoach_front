@@ -1,12 +1,17 @@
 <template>
   <v-layout>
-    <h3>Mis Clientes</h3>
-    <CustomerCard
-      v-for="(customer, idx) in customers"
-      :key="idx"
-      :customer="customer"
-      @click="seeCustomer"
-    />
+    <v-container>
+      <v-col cols="10" class="mt-10 mx-auto">
+        <h1>Mis Clientes</h1>
+        <h2>{{ customers }}</h2>
+        <CustomerCard
+          v-for="(customer, idx) in customers"
+          :key="idx"
+          :customer="customer"
+          @click="seeCustomer"
+        />
+      </v-col>
+    </v-container>
   </v-layout>
 </template>
 
