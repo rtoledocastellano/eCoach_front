@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    {{ appointments }}
-    <v-container>
+    {{ customer }}
+    <v-container class="customerAvatar">
       <v-col>
         <v-row class="justify-center align-center">
           <v-avatar color="white">
@@ -13,7 +13,7 @@
         </v-row>
       </v-col>
     </v-container>
-    <v-container>
+    <v-container class="PersonalInfo">
       <v-expansion-panels>
         <v-expansion-panel>
           <v-expansion-panel-header>Datos Personales</v-expansion-panel-header>
@@ -21,23 +21,42 @@
             <v-text-field
               v-model="customer.email"
               :label="customer.email ? customer.email : 'Email'"
-              :disabled="modifyPersonalData"
+              :disabled="!modifyPersonalData"
               prepend-inner-icon="mdi-email"
             ></v-text-field>
             <v-text-field
               v-model="customer.telephone"
               :label="customer.telephone ? customer.telephone : 'Telefóno'"
-              :disabled="modifyPersonalData"
+              :disabled="!modifyPersonalData"
               prepend-inner-icon="mdi-email"
             ></v-text-field>
-            <v-text-field
-              v-model="customer.birthDate"
-              :label="
-                customer.birthDate ? customer.birthDate : 'Fecha de Nacimiento'
-              "
-              :disabled="modifyPersonalData"
-              prepend-inner-icon="mdi-user"
-            ></v-text-field>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-menu
+                  v-model="menu4"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Fecha de Nacimiento"
+                      prepend-icon="event"
+                      :disabled="!modifyPersonalData"
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    @input="menu4 = false"
+                  ></v-date-picker>
+                </v-menu>
+              </v-col>
+            </v-row>
             <v-text-field
               v-model="goal"
               :label="customer.goal ? customer.goal : 'Introduzca Objetivo'"
@@ -59,7 +78,7 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-container>
-    <v-container>
+    <v-container class="AppointmentTable">
       <v-expansion-panels>
         <v-expansion-panel>
           <v-expansion-panel-header>Control de Citas</v-expansion-panel-header>
@@ -82,7 +101,7 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-container>
-    <v-container>
+    <v-container class="New Date">
       <v-row class="justify-right align-right">
         <v-spacer></v-spacer>
         <v-btn color="#F9D56E" @click="showAppointment = !showAppointment"
@@ -94,12 +113,11 @@
           <h4>Nueva Cita</h4>
         </v-row>
         <v-row>
-          <v-col>
+          <v-col cols="12" sm="6" md="4">
             <v-menu
-              ref="menu"
-              v-model="menu"
+              v-model="menu2"
               :close-on-content-click="false"
-              :return-value.sync="date"
+              :nudge-right="40"
               transition="scale-transition"
               offset-y
               min-width="290px"
@@ -107,20 +125,17 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="date"
-                  label="Cita"
-                  prepend-icon="mdi-event"
+                  label="Picker without buttons"
+                  prepend-icon="event"
                   readonly
                   v-bind="attrs"
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="date" no-title scrollable>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                <v-btn text color="primary" @click="$refs.menu.save(date)"
-                  >OK</v-btn
-                >
-              </v-date-picker>
+              <v-date-picker
+                v-model="date"
+                @input="menu2 = false"
+              ></v-date-picker>
             </v-menu>
           </v-col>
         </v-row>
@@ -192,6 +207,7 @@ export default {
       menu: false,
       modal: false,
       menu2: false,
+      menu4: false,
       time: null,
       menu3: false,
       modal2: false,
@@ -213,35 +229,31 @@ export default {
   },
   methods: {
     updateCustomer() {
-      this.$axios
-        .post(
-          `customers/${this.$route.params.id}`,
-          {
-            email: this.customer.email,
-            telephone: this.customer.telephone,
-            birthDate: this.customer.birthDate,
-          },
-          {
-            headers: { token: localStorage.getItem('token') },
-          }
-        )
-        .then((response) => (this.customer = response.data[0]))
-      this.$router.push(`/customers/${this.$route.params.id}`)
+      this.$axios.post(
+        `customers/${this.$route.params.id}`,
+        {
+          email: this.customer.email,
+          telephone: this.customer.telephone,
+          birthDate: this.date,
+          goal: this.customer.goal,
+        },
+        {
+          headers: { token: localStorage.getItem('token') },
+        }
+      )
+      this.modifyPersonalData = !this.modifyPersonalData
     },
     confirmAppointment() {
-      this.$axios
-        .post(
-          `customers/${this.$route.params.id}/appointment`,
-          {
-            customer: this.$route.params.id,
-            date: this.date,
-          },
-          {
-            headers: { token: localStorage.getItem('token') },
-          }
-        )
-        .then((response) => (this.customer = response.data[0]))
-      this.$router.push(`/customers/${this.$route.params.id}`)
+      this.$axios.post(
+        `customers/${this.$route.params.id}/appointment`,
+        {
+          customer: this.$route.params.id,
+          date: this.date,
+        },
+        {
+          headers: { token: localStorage.getItem('token') },
+        }
+      )
     },
     goToItem(item) {
       this.$router.push(`/appointments/${item._id}`)

@@ -11,12 +11,12 @@
               <v-text-field
                 v-model="name"
                 label="Nombre"
-                prepend-icon="mdi-user"
+                prepend-inner-icon="mdi-account"
               />
               <v-text-field
                 v-model="email"
                 label="Email"
-                prepend-icon="mdi-mail"
+                prepend-inner-icon="mdi-mail"
               />
               <v-text-field
                 v-model="birthdate"

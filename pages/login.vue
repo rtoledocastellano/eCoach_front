@@ -4,7 +4,7 @@
       <v-col cols="10" class="mt-10 mx-auto">
         <v-card>
           <v-card-title>
-            <h1>Login</h1>
+            <h3>Login</h3>
           </v-card-title>
           <v-card-text>
             <v-form>
@@ -24,8 +24,9 @@
             </v-form>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="#F9D56E" @click.prevent="loginFunction"
-                >Login</v-btn
+              <v-btn color="#F9D56E" @click.prevent="loginFunction">
+                <v-icon>mdi-login</v-icon>
+                Login</v-btn
               >
             </v-card-actions>
           </v-card-text>
@@ -35,7 +36,7 @@
         <h5>
           ¿Aún no estás registrado? Haz click aquí
         </h5>
-        <v-btn nuxt-link to="/signup">Registrate</v-btn>
+        <v-btn class="mt-5" nuxt-link to="/signup">Registrate</v-btn>
       </v-col>
     </v-container>
   </v-layout>
@@ -58,7 +59,7 @@ export default {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('name', response.data.name)
           localStorage.setItem('email', response.data.email)
-          this.$router.go('/')
+          this.$router.push('/customers')
         })
     },
   },

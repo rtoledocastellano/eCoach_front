@@ -3,22 +3,29 @@
     <div>
       <Navbar />
     </div>
-    <v-main>
+    <v-main class="v-application">
       <v-container>
         <nuxt />
       </v-container>
     </v-main>
-    <v-footer absolute app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <NavigationMenu />
   </v-app>
 </template>
 
 <script>
 import Navbar from '@@/components/navbar'
+import NavigationMenu from '@@/components/navigation-menu'
+
 export default {
   components: {
     Navbar,
+    NavigationMenu,
   },
 }
 </script>
+
+<style>
+.v-application {
+  background-color: #9e9e9e;
+}
+</style>

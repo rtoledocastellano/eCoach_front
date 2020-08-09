@@ -1,12 +1,9 @@
 <template>
   <div>
-    <h1>El fortacho tiene una cita</h1>
-    <h1>{{ appointment }}</h1>
-
-    <h2>Control Fecha:</h2>
+    <h2>Control Fecha: {{ appointment.date }}</h2>
     <v-container>
       <v-row>
-        <v-col cols="12">
+        <v-col cols="12" md="6">
           <v-text-field
             v-model="appointment.weight"
             label="Peso (kg)"
@@ -14,7 +11,7 @@
             prepend-inner-icon="mdi-email"
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" md="6">
           <v-text-field
             v-model="appointment.muscle"
             label="Músculo(%)"
@@ -22,7 +19,7 @@
             prepend-inner-icon="mdi-email"
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" md="6">
           <v-text-field
             v-model="appointment.fat"
             label="Grasa(%)"
@@ -30,7 +27,7 @@
             prepend-inner-icon="mdi-user"
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" md="6">
           <v-text-field
             v-model="appointment.water"
             label="Agua(%)"
@@ -58,12 +55,12 @@
       <v-row>
         <v-col>
           <v-textarea
-            v-model="appointment.diet"
-            name="Dieta"
+            v-model="appointment.training"
+            name="Entrenamiento"
             filled
-            label="Dieta"
+            label="Entrenamiento"
             auto-grow
-            :value="appointment.diet"
+            :value="appointment.training"
             :disabled="edit"
           >
           </v-textarea>
@@ -102,6 +99,7 @@ export default {
   },
   methods: {
     updateAppointment() {
+      console.log(this.$route.params.id)
       this.$axios.post(
         `appointments/${this.$route.params.id}`,
         {
