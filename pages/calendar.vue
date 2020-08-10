@@ -46,7 +46,6 @@ export default {
   async asyncData({ $axios }) {
     const headers = { headers: { token: localStorage.getItem('token') } }
     const appointmentData = await $axios.get(`appointments/`, headers)
-    console.table(appointmentData)
     return {
       appointments: appointmentData.data.map((app) => ({
         ...app,
@@ -71,12 +70,6 @@ export default {
         { text: 'Actions', value: 'actions', sortable: false },
       ],
     }
-  },
-  methods: {
-    myFilter(value, query) {
-      console.log(value, query)
-      return true
-    },
   },
 }
 </script>

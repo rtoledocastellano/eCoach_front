@@ -57,11 +57,10 @@
               </v-col>
             </v-row>
             <v-select
-              v-model="goal"
+              v-model="customer.goal"
               :label="customer.goal ? customer.goal : 'Introduzca Objetivo'"
               :disabled="!modifyPersonalData"
               :items="possibleGoals"
-              :error-messages="errors"
               prepend-inner-icon="mdi-bullseye-arrow"
             ></v-select>
             <div class="text-right">
@@ -104,6 +103,9 @@
     </v-container>
     <v-container class="New Date">
       <v-row class="justify-right align-right">
+        <div v-show="confirmationMessage">
+          <h4>Su cita se ha guardado correctamente</h4>
+        </div>
         <v-spacer></v-spacer>
         <v-btn color="#F9D56E" @click="showAppointment = !showAppointment"
           >Dar una Cita</v-btn
@@ -127,7 +129,7 @@
                 <v-text-field
                   v-model="date"
                   label="Picker without buttons"
-                  prepend-icon="event"
+                  prepend-icon="mdi-calendar"
                   readonly
                   v-bind="attrs"
                   v-on="on"
@@ -135,6 +137,7 @@
               </template>
               <v-date-picker
                 v-model="date"
+                prepend-icon="alarm"
                 @input="menu2 = false"
               ></v-date-picker>
             </v-menu>
@@ -183,6 +186,37 @@
         </v-row>
       </div>
     </v-container>
+    <v-container class="PersonalInfo">
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-header>Ver Evolución</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-card class="mx-auto text-center" color="gray">
+              <v-card-text>
+                <v-sheet color="rgba(0, 0, 0, .12)">
+                  <v-sparkline
+                    :value="value"
+                    color="primary"
+                    height="100"
+                    padding="24"
+                    stroke-linecap="round"
+                    smooth
+                  >
+                    <template v-slot:label="item">
+                      {{ item.value }}kg
+                    </template>
+                  </v-sparkline>
+                </v-sheet>
+              </v-card-text>
+
+              <v-card-text>
+                <div class="font-weight-bold">Peso Corporal</div>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-container>
   </div>
 </template>
 
@@ -197,13 +231,17 @@ export default {
     )
     return {
       customer: customerData.data[0],
-      appointments: appointmentData.data,
+      appointments: appointmentData.data.map((app) => ({
+        ...app,
+        date: app.date.substr(0, 10),
+      })),
     }
   },
   data() {
     return {
       modifyPersonalData: false,
       showAppointment: false,
+      confirmationMessage: false,
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -213,19 +251,20 @@ export default {
       menu3: false,
       modal2: false,
       items: [10, 20, 30],
+      value: [81.3, 82.4, 83.5],
       possibleGoals: ['Perder Peso', 'Mantener Peso', 'Aumentar Masa'],
       headers: [
         {
-          text: 'Date',
+          text: 'Fecha',
           align: 'start',
           sortable: false,
           value: 'date',
         },
-        { text: 'Fat (%)', value: 'fat' },
-        { text: 'Muscle (%)', value: 'muscle' },
-        { text: 'Water (%)', value: 'water' },
-        { text: 'Weight (kg)', value: 'weight' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Grasa (%)', value: 'fat' },
+        { text: 'Músculo (%)', value: 'muscle' },
+        { text: 'Agua (%)', value: 'water' },
+        { text: 'Peso (kg)', value: 'weight' },
+        { text: 'Editar', value: 'actions', sortable: false },
       ],
     }
   },
@@ -256,6 +295,8 @@ export default {
           headers: { token: localStorage.getItem('token') },
         }
       )
+      this.showAppointment = !this.showAppointment
+      this.confirmationMessage = !this.confirmationMessage
     },
     goToItem(item) {
       this.$router.push(`/appointments/${item._id}`)
