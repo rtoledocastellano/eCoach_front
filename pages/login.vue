@@ -36,7 +36,9 @@
         <h5>
           ¿Aún no estás registrado? Haz click aquí
         </h5>
-        <v-btn class="mt-5" nuxt-link to="/signup">Registrate</v-btn>
+        <v-btn class="mt-5" color="#2196F3" nuxt-link to="/signup"
+          >Registrate</v-btn
+        >
       </v-col>
     </v-container>
   </v-layout>
@@ -44,6 +46,7 @@
 
 <script>
 export default {
+  layout: 'simple',
   data() {
     return {
       email: '',

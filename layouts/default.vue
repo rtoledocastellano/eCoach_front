@@ -27,5 +27,8 @@ export default {
 <style>
 .v-application {
   background-color: #9e9e9e;
+  background-image: url('https://i.ibb.co/6826pBV/Sin-t-tulo-1.png');
+  background-position: center;
+  background-size: cover;
 }
 </style>

@@ -1,54 +1,71 @@
 <template>
   <div>
-    <v-card color="primary">
-      <v-tabs background-color="primary" centered dark icons-and-text>
+    <v-card>
+      <v-tabs
+        v-model="tab"
+        background-color="deep-purple accent-4"
+        centered
+        dark
+        icons-and-text
+      >
         <v-tabs-slider></v-tabs-slider>
 
-        <v-tab @click="showTable = !showTable">
-          Tabla
-          <v-icon>mdi-table</v-icon>
+        <v-tab href="#tab-1">
+          Recents
+          <v-icon>mdi-phone</v-icon>
         </v-tab>
 
-        <v-tab @click="showTable = !showTable">
-          Calendario
-          <v-icon>mdi-calendar</v-icon>
+        <v-tab href="#tab-2">
+          Favorites
+          <v-icon>mdi-heart</v-icon>
+        </v-tab>
+
+        <v-tab href="#tab-3">
+          Nearby
+          <v-icon>mdi-account-box</v-icon>
         </v-tab>
       </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item v-for="i in 3" :key="i" :value="'tab-' + i">
+          <v-card flat>
+            <v-card-text>{{ text }}</v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-card>
     <v-card v-show="showTable" class="mt-10">
       <v-card-title>
         Mis Citas
-      </v-card-title>
-      <v-row>
-        <v-col cols="12" sm="6" md="2">
-          <v-menu
-            v-model="menu2"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
+        <v-spacer></v-spacer>
+        <v-row>
+          <v-col cols="12" sm="6" md="4">
+            <v-menu
+              v-model="menu2"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="date"
+                  label="Fecha"
+                  prepend-icon="mdi-event"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
                 v-model="date"
-                label="Fecha"
-                prepend-icon="mdi-event"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="date"
-              :first-day-of-week="1"
-              locale="es"
-              @input="menu2 = false"
-            ></v-date-picker>
-          </v-menu>
-        </v-col>
-      </v-row>
-
+                @input="menu2 = false"
+              ></v-date-picker>
+            </v-menu>
+          </v-col>
+        </v-row>
+      </v-card-title>
       <v-data-table :headers="headers" :items="appointments" :search="date"
         ><template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="goToUser(item)">
@@ -69,6 +86,8 @@
           <v-sheet height="400">
             <v-calendar
               ref="calendar"
+              :now="today"
+              :value="today"
               :events="events"
               color="primary"
               type="week"
@@ -90,17 +109,13 @@ export default {
         ...app,
         date: app.date.substr(0, 10),
       })),
-      events: appointmentData.data.map((app) => ({
-        name: app.customer.name,
-        start: `${app.date.substr(0, 10)} ${app.starts}`,
-        end: `${app.date.substr(0, 10)} ${app.finish}`,
-      })),
     }
   },
   data() {
     return {
       date: new Date().toISOString().substr(0, 10),
       items: [],
+      tab: null,
       menu2: false,
       showTable: true,
       headers: [

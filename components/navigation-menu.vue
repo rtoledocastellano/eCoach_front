@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation background-color="primary">
+  <v-bottom-navigation background-color="primary" fixed>
     <v-btn value="Home" @click="goToHome">
       <span class="white--text">Home</span>
       <v-icon class="white--text">mdi-home-account</v-icon>

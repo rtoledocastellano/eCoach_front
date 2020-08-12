@@ -53,7 +53,7 @@
         <h5>
           ¿Ya estás registrado?
         </h5>
-        <v-btn class="mt-5" nuxt to="/login">
+        <v-btn color="#2196F3" class="mt-5" nuxt to="/login">
           <v-icon>mdi-login</v-icon> Login</v-btn
         >
       </v-col>
@@ -63,6 +63,8 @@
 
 <script>
 export default {
+  layout: 'simple',
+
   data() {
     return {
       name: '',
@@ -102,7 +104,7 @@ export default {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('name', response.data.name)
           localStorage.setItem('email', response.data.email)
-          this.$router.go('/')
+          this.$router.push('/calendar')
         })
     },
   },

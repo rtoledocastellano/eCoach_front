@@ -1,15 +1,18 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
+  <div>
+    <h1 v-if="error.statusCode === 403">
+      No estas logeado.
+      <br />
+      Por favor registrate
     </h1>
+
     <h1 v-else>
       {{ otherError }}
     </h1>
     <NuxtLink to="/">
       Home page
     </NuxtLink>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -29,7 +32,7 @@ export default {
   },
   head() {
     const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+      this.error.statusCode === 403 ? this.pageNotFound : this.otherError
     return {
       title,
     }

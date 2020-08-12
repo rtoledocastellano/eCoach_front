@@ -128,7 +128,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="date"
-                  label="Picker without buttons"
+                  label="Escoja su fecha"
                   prepend-icon="mdi-calendar"
                   readonly
                   v-bind="attrs"
@@ -159,8 +159,8 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="time"
-                  label="Seleccione la Hora"
+                  v-model="starts"
+                  label="Hora de Inicio"
                   prepend-icon="mdi-access_time"
                   readonly
                   v-bind="attrs"
@@ -169,7 +169,7 @@
               </template>
               <v-time-picker
                 v-if="menu3"
-                v-model="time"
+                v-model="starts"
                 full-width
                 @click:minute="$refs.menu.save(time)"
               ></v-time-picker>
@@ -177,7 +177,34 @@
           </v-col>
           <v-spacer></v-spacer>
           <v-col>
-            <v-select :items="items" label="Duración" solo></v-select>
+            <v-menu
+              ref="menu"
+              v-model="menu5"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              :return-value.sync="time"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="finish"
+                  label="Hora de Fin"
+                  prepend-icon="mdi-access_time"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-time-picker
+                v-if="menu5"
+                v-model="finish"
+                full-width
+                @click:minute="$refs.menu.save(time)"
+              ></v-time-picker>
+            </v-menu>
           </v-col>
         </v-row>
         <v-row class="justify-right align-right">
@@ -247,7 +274,9 @@ export default {
       modal: false,
       menu2: false,
       menu4: false,
-      time: null,
+      menu5: false,
+      starts: null,
+      finish: null,
       menu3: false,
       modal2: false,
       items: [10, 20, 30],
@@ -290,6 +319,8 @@ export default {
         {
           customer: this.$route.params.id,
           date: this.date,
+          starts: this.starts,
+          finish: this.finish,
         },
         {
           headers: { token: localStorage.getItem('token') },
