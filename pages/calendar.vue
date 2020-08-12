@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-card color="primary">
-      <v-tabs background-color="primary" centered dark icons-and-text>
+    <v-card color="#006064">
+      <v-tabs background-color="#006064" centered dark icons-and-text>
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab @click="showTable = !showTable">
@@ -110,8 +110,8 @@ export default {
           sortable: false,
           value: 'date',
         },
-        { text: 'Inicio', value: 'starts' },
-        { text: 'Cliente', value: 'customer.name' },
+        { text: 'Inicio', value: 'starts', sortable: false },
+        { text: 'Cliente', value: 'customer.name', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
     }
