@@ -48,9 +48,10 @@
                 prepend-inner-icon="mdi-phone"
               />
               <v-text-field
-                v-model="customer.height"
+                v-model.number="customer.height"
                 label="Estatura (cm)"
                 prepend-inner-icon="mdi-human-male-height"
+                type="Number"
               />
               <v-select
                 v-model="customer.goal"

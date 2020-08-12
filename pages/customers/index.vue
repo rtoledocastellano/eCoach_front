@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <h1>Mis Clientes</h1>
+          <h1 class="white--text">Mis Clientes</h1>
         </v-col>
       </v-row>
       <v-row>
@@ -19,7 +19,11 @@
       <v-pagination
         v-model="page"
         class="my-4"
-        :length="Math.floor(customers.length / perPage) + 1"
+        :length="
+          (customers.length / perPage) % 0
+            ? Math.floor(customers.length / perPage)
+            : Math.floor(customers.length / perPage) + 1
+        "
         :total-visible="perPage"
         circle
       ></v-pagination>

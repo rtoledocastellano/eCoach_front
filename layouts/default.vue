@@ -3,7 +3,7 @@
     <div>
       <Navbar />
     </div>
-    <v-main class="v-application">
+    <v-main class="v-application mb-10">
       <v-container>
         <nuxt />
       </v-container>
