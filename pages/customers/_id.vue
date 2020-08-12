@@ -8,7 +8,7 @@
           </v-avatar>
         </v-row>
         <v-row class="justify-center align-center">
-          <h2 class="mt-3">{{ customer.name }}</h2>
+          <h2 class="mt-3 white--text">{{ customer.name }}</h2>
         </v-row>
       </v-col>
     </v-container>
@@ -111,126 +111,138 @@
           >Dar una Cita</v-btn
         >
       </v-row>
-      <div v-if="showAppointment">
-        <v-row>
-          <h4>Nueva Cita</h4>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="6" md="4">
-            <v-menu
-              v-model="menu2"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
+      <v-card v-if="showAppointment" class="mt-5">
+        <v-card-title>
+          Nueva Cita
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <v-menu
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="date"
+                    label="Escoja su fecha"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
                   v-model="date"
-                  label="Escoja su fecha"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="date"
-                prepend-icon="alarm"
-                @input="menu2 = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-col>
-        </v-row>
+                  prepend-icon="alarm"
+                  @input="menu2 = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
 
-        <v-row>
-          <v-col>
-            <v-menu
-              ref="menu"
-              v-model="menu3"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              :return-value.sync="time"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
+          <v-row>
+            <v-col>
+              <v-menu
+                ref="menu"
+                v-model="menu3"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                :return-value.sync="time"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="starts"
+                    label="Hora de Inicio"
+                    prepend-icon="mdi-alarm"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-time-picker
+                  v-if="menu3"
                   v-model="starts"
-                  label="Hora de Inicio"
-                  prepend-icon="mdi-access_time"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-time-picker
-                v-if="menu3"
-                v-model="starts"
-                full-width
-                @click:minute="$refs.menu.save(time)"
-              ></v-time-picker>
-            </v-menu>
-          </v-col>
-          <v-spacer></v-spacer>
-          <v-col>
-            <v-menu
-              ref="menu"
-              v-model="menu5"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              :return-value.sync="time"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
+                  full-width
+                  @click:minute="$refs.menu.save(time)"
+                ></v-time-picker>
+              </v-menu>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col>
+              <v-menu
+                ref="menu"
+                v-model="menu5"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                :return-value.sync="time"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="finish"
+                    label="Hora de Fin"
+                    prepend-icon="mdi-alarm"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-time-picker
+                  v-if="menu5"
                   v-model="finish"
-                  label="Hora de Fin"
-                  prepend-icon="mdi-access_time"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-time-picker
-                v-if="menu5"
-                v-model="finish"
-                full-width
-                @click:minute="$refs.menu.save(time)"
-              ></v-time-picker>
-            </v-menu>
-          </v-col>
-        </v-row>
-        <v-row class="justify-right align-right">
-          <v-spacer></v-spacer>
-          <v-btn color="#14B1AB" @click="confirmAppointment">Confirmar</v-btn>
-        </v-row>
-      </div>
+                  full-width
+                  @click:minute="$refs.menu.save(time)"
+                ></v-time-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
+
+          <v-card-actions>
+            <v-container>
+              <v-row class="text-right">
+                <v-col>
+                  <v-btn color="#14B1AB" @click="confirmAppointment"
+                    >Confirmar</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-actions>
+        </v-card-text>
+      </v-card>
     </v-container>
-    <v-container class="PersonalInfo">
+    <v-container class="EvolutionGraphs">
       <v-expansion-panels>
         <v-expansion-panel>
           <v-expansion-panel-header>Ver Evolución</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-card class="mx-auto text-center" color="gray">
               <v-card-text>
+                {{ dates }}
+                {{ weights }}
                 <v-sheet color="rgba(0, 0, 0, .12)">
                   <v-sparkline
-                    :value="value"
+                    :value="weights"
                     color="primary"
                     height="100"
                     padding="24"
                     stroke-linecap="round"
                     smooth
                   >
-                    <template v-slot:label="item">
-                      {{ item.value }}kg
+                    <template v-slot:label="dates">
+                      {{ dates }}
                     </template>
                   </v-sparkline>
                 </v-sheet>
@@ -262,6 +274,9 @@ export default {
         ...app,
         date: app.date.substr(0, 10),
       })),
+      dates: appointmentData.data.map((app) => ({
+        date: app.date.substr(0, 10),
+      })),
     }
   },
   data() {
@@ -279,8 +294,6 @@ export default {
       finish: null,
       menu3: false,
       modal2: false,
-      items: [10, 20, 30],
-      value: [81.3, 82.4, 83.5],
       possibleGoals: ['Perder Peso', 'Mantener Peso', 'Aumentar Masa'],
       headers: [
         {
@@ -289,10 +302,10 @@ export default {
           sortable: false,
           value: 'date',
         },
-        { text: 'Grasa (%)', value: 'fat' },
-        { text: 'Músculo (%)', value: 'muscle' },
-        { text: 'Agua (%)', value: 'water' },
-        { text: 'Peso (kg)', value: 'weight' },
+        { text: 'Grasa (%)', value: 'fat', sortable: false },
+        { text: 'Músculo (%)', value: 'muscle', sortable: false },
+        { text: 'Agua (%)', value: 'water', sortable: false },
+        { text: 'Peso (kg)', value: 'weight', sortable: false },
         { text: 'Editar', value: 'actions', sortable: false },
       ],
     }

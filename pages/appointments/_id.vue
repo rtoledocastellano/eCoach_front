@@ -8,7 +8,7 @@
           </v-avatar>
         </v-row>
         <v-row class="justify-center align-center">
-          <h2 class="mt-3">{{ appointment.customer.name }}</h2>
+          <h2 class="mt-3 white--text">{{ appointment.customer.name }}</h2>
         </v-row>
       </v-col>
     </v-container>
