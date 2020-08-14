@@ -228,28 +228,56 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Ver Evolución</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-card class="mx-auto text-center" color="gray">
-              <v-card-text>
-                {{ values }} Rafa
-                <v-sheet color="rgba(0, 0, 0, .12)">
-                  <v-sparkline
-                    :value="appointments.weight"
-                    color="primary"
-                    height="100"
-                    padding="24"
-                    stroke-linecap="round"
-                    smooth
-                  >
-                    <template v-slot:label="">
-                      {{ appointment.dates }}
-                    </template>
-                  </v-sparkline>
-                </v-sheet>
-              </v-card-text>
-
-              <v-card-text>
-                <div class="font-weight-bold">Peso Corporal</div>
-              </v-card-text>
+            <v-card class="mt-4 mx-auto">
+              <v-sheet class="v-sheet--offset mx-auto" elevation="5">
+                <v-sparkline
+                  :labels="labels"
+                  :value="valueWeight"
+                  color="#006064"
+                  line-width="2"
+                  padding="25"
+                  label-size="4"
+                ></v-sparkline>
+                <v-card-text class="mt-2">
+                  <div class="title font-weight-light mb-2">
+                    Peso Corporal
+                  </div>
+                </v-card-text>
+              </v-sheet>
+            </v-card>
+            <v-card class="mt-4 mx-auto">
+              <v-sheet class="v-sheet--offset mx-auto" elevation="5">
+                <v-sparkline
+                  :labels="labels"
+                  :value="valueFat"
+                  color="#006064"
+                  line-width="2"
+                  padding="25"
+                  label-size="4"
+                ></v-sparkline>
+                <v-card-text class="mt-2">
+                  <div class="title font-weight-light mb-2">
+                    Grasa Corporal
+                  </div>
+                </v-card-text>
+              </v-sheet>
+            </v-card>
+            <v-card class="mt-4 mx-auto">
+              <v-sheet class="v-sheet--offset mx-auto" elevation="5">
+                <v-sparkline
+                  :labels="labels"
+                  :value="valueMuscle"
+                  color="#006064"
+                  line-width="2"
+                  padding="25"
+                  label-size="4"
+                ></v-sparkline>
+                <v-card-text class="mt-2">
+                  <div class="title font-weight-light mb-2">
+                    Músculo
+                  </div>
+                </v-card-text>
+              </v-sheet>
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -273,7 +301,10 @@ export default {
         ...app,
         date: app.date.substr(0, 10),
       })),
-      values: appointmentData.data.map((app) => app.date.substr(0, 10)),
+      labels: appointmentData.data.map((app) => app.date.substr(0, 10)),
+      valueWeight: appointmentData.data.map((app) => app.weight),
+      valueFat: appointmentData.data.map((app) => app.fat),
+      valueMuscle: appointmentData.data.map((app) => app.muscle),
     }
   },
   data() {
@@ -281,12 +312,11 @@ export default {
       modifyPersonalData: false,
       showAppointment: false,
       confirmationMessage: false,
-      values: [],
-      fechas: [],
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
       menu2: false,
+      time: null,
       menu4: false,
       menu5: false,
       starts: null,
