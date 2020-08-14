@@ -1,46 +1,41 @@
 <template>
-  <div>
-    <v-container fluid class="main">
-      <v-row>
-        <v-col>
+  <v-container fluid>
+    <v-row class="text-center" align="center">
+      <v-col cols="12" class="main">
+        <div>
           <h1>eCoach</h1>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
           <p>
             La aplicación que te permitirá llevar a tus clientes al siguiente
             nivel
           </p>
           <p>¿Quieres probarlo?</p>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-container>
-      <v-row>
-        <v-col cols="12" class="text-center">
-          <v-btn color="#F9D56E" nuxt to="/login">
-            Start Now
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+        </div>
+      </v-col>
+      <v-col cols="12" class="text-center mt-5">
+        <v-btn color="#F9D56E" nuxt to="/login">Start Now</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
-  layout: 'simple',
+  layout: 'landing',
 }
 </script>
 
 <style lang="scss" scoped>
 .main {
+  height: 450px;
+  padding-top: 200px;
   color: white;
-  margin-top: 150px;
   h1 {
-    font-size: 45px;
+    font-size: 60px;
     font-weight: bold;
+  }
+  p {
+    font-weight: bold;
+    font-size: 20px;
   }
 }
 </style>

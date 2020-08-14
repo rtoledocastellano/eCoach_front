@@ -4,11 +4,17 @@
       <v-col>
         <v-row class="justify-center align-center">
           <v-avatar color="white">
-            <v-icon color="black">mdi-account-circle</v-icon>
+            <v-icon color="black" @click="goToCustomer"
+              >mdi-account-circle</v-icon
+            >
           </v-avatar>
         </v-row>
         <v-row class="justify-center align-center">
-          <h2 class="mt-3 white--text">{{ appointment.customer.name }}</h2>
+          <div class="mt-3" @click="goToCustomer">
+            <h2>
+              {{ appointment.customer.name }}
+            </h2>
+          </div>
         </v-row>
       </v-col>
     </v-container>
@@ -140,6 +146,9 @@ export default {
         }
       )
       this.edit = !this.edit
+    },
+    goToCustomer() {
+      this.$router.push(`/customers/${this.appointment.customer._id}`)
     },
   },
 }

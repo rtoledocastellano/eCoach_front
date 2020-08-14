@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" class="mt-10 mx-auto">
-          <h3>Mis Clientes</h3>
+          <h1>Mis Clientes</h1>
         </v-col>
       </v-row>
       <v-row>
@@ -36,9 +36,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-h3 {
-  color: white;
-}
-</style>

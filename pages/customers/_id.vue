@@ -8,7 +8,7 @@
           </v-avatar>
         </v-row>
         <v-row class="justify-center align-center">
-          <h2 class="mt-3 white--text">{{ customer.name }}</h2>
+          <h2 class="mt-3">{{ customer.name }}</h2>
         </v-row>
       </v-col>
     </v-container>
@@ -230,19 +230,18 @@
           <v-expansion-panel-content>
             <v-card class="mx-auto text-center" color="gray">
               <v-card-text>
-                {{ dates }}
-                {{ weights }}
+                {{ values }} Rafa
                 <v-sheet color="rgba(0, 0, 0, .12)">
                   <v-sparkline
-                    :value="weights"
+                    :value="appointments.weight"
                     color="primary"
                     height="100"
                     padding="24"
                     stroke-linecap="round"
                     smooth
                   >
-                    <template v-slot:label="dates">
-                      {{ dates }}
+                    <template v-slot:label="">
+                      {{ appointment.dates }}
                     </template>
                   </v-sparkline>
                 </v-sheet>
@@ -274,9 +273,7 @@ export default {
         ...app,
         date: app.date.substr(0, 10),
       })),
-      dates: appointmentData.data.map((app) => ({
-        date: app.date.substr(0, 10),
-      })),
+      values: appointmentData.data.map((app) => app.date.substr(0, 10)),
     }
   },
   data() {
@@ -284,6 +281,8 @@ export default {
       modifyPersonalData: false,
       showAppointment: false,
       confirmationMessage: false,
+      values: [],
+      fechas: [],
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,

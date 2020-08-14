@@ -3,7 +3,7 @@
     <div>
       <Navbar />
     </div>
-    <v-main class="v-application mb-10">
+    <v-main class="v-application-default mb-10">
       <v-container>
         <nuxt />
       </v-container>
@@ -25,10 +25,7 @@ export default {
 </script>
 
 <style>
-.v-application {
-  background-color: #9e9e9e;
-  background-image: url('https://i.ibb.co/6826pBV/Sin-t-tulo-1.png');
-  background-position: center;
-  background-size: cover;
+.v-application-default {
+  background-color: #e0ece4;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="v-application">
+    <v-main class="v-application-simple">
       <v-container>
         <nuxt />
       </v-container>
@@ -9,7 +9,7 @@
 </template>
 
 <style>
-.v-application {
-  background-color: #9e9e9e;
+.v-application-simple {
+  background-color: #e0ece4;
 }
 </style>
