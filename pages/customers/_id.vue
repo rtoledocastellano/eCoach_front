@@ -239,7 +239,7 @@
                   label-size="2"
                 ></v-sparkline>
                 <v-card-text class="mt-2">
-                  <div class="title font-weight-light mb-2">
+                  <div class="title font-weight-light mb-2 text-center">
                     Peso Corporal
                   </div>
                 </v-card-text>
@@ -256,7 +256,7 @@
                   label-size="4"
                 ></v-sparkline>
                 <v-card-text class="mt-2">
-                  <div class="title font-weight-light mb-2">
+                  <div class="title font-weight-light mb-2 text-center">
                     Grasa Corporal
                   </div>
                 </v-card-text>
@@ -273,7 +273,7 @@
                   label-size="4"
                 ></v-sparkline>
                 <v-card-text class="mt-2">
-                  <div class="title font-weight-light mb-2">
+                  <div class="title font-weight-light mb-2 text-center">
                     Músculo
                   </div>
                 </v-card-text>
