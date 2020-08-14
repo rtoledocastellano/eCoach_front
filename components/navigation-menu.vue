@@ -14,6 +14,11 @@
       <span class="white--text">New Customer</span>
       <v-icon class="white--text">mdi-account-plus</v-icon>
     </v-btn>
+
+    <v-btn value="logout" @click="logout">
+      <span class="white--text">Logout</span>
+      <v-icon class="white--text">mdi-logout</v-icon>
+    </v-btn>
   </v-bottom-navigation>
 </template>
 
@@ -29,6 +34,10 @@ export default {
     },
     goToHome() {
       this.$router.push('/calendar')
+    },
+    logout() {
+      localStorage.clear()
+      this.$router.push('/')
     },
   },
 }
