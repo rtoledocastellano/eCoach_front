@@ -223,7 +223,7 @@
         </v-card-text>
       </v-card>
     </v-container>
-    <v-container class="EvolutionGraphs">
+    <!-- <v-container class="EvolutionGraphs">
       <v-expansion-panels>
         <v-expansion-panel>
           <v-expansion-panel-header>Ver Evolución</v-expansion-panel-header>
@@ -282,7 +282,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-    </v-container>
+    </v-container> -->
   </div>
 </template>
 
