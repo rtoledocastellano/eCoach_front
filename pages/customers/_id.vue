@@ -236,7 +236,7 @@
                   color="#006064"
                   line-width="2"
                   padding="25"
-                  label-size="4"
+                  label-size="1"
                 ></v-sparkline>
                 <v-card-text class="mt-2">
                   <div class="title font-weight-light mb-2">
